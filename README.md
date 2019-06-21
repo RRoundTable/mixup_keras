@@ -46,3 +46,6 @@ python visualize.py
 
 - [paper][mixup: BEYOND EMPIRICAL RISK MINIMIZATION](https://arxiv.org/abs/1710.09412)
 - [github](https://github.com/facebookresearch/mixup-cifar10)
+
+## Notes
+[mixup_note](https://www.notion.so/rroundtable/mixup-467e0a5d4d284e05a5879007b9d1b97f)
