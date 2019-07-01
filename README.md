@@ -28,6 +28,12 @@ Visualize the result of convex combinations.
 python visualize.py
 ```
 
+Check hyperparameters.
+
+```python
+hyper_params.py
+```
+
 ## Visualization: convex combination
 
 - MNIST
@@ -44,8 +50,8 @@ python visualize.py
 
 ## Reference
 
-- [paper][mixup: BEYOND EMPIRICAL RISK MINIMIZATION](https://arxiv.org/abs/1710.09412)
-- [github](https://github.com/facebookresearch/mixup-cifar10)
+- paper: [mixup: BEYOND EMPIRICAL RISK MINIMIZATION](https://arxiv.org/abs/1710.09412)
+- github: https://github.com/facebookresearch/mixup-cifar10
 
 ## Notes
 [mixup_note](https://www.notion.so/rroundtable/mixup-467e0a5d4d284e05a5879007b9d1b97f)

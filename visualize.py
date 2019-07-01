@@ -9,7 +9,7 @@ from matplotlib.path import Path
 import matplotlib.patches as patches
 from hyper_params import get_hyper_params
 from tensorflow.python.keras.datasets import mnist, cifar10, fashion_mnist
-from module import mixup_data_one_sample
+from module import mixup_data_one_sample, mixup_data
 from sklearn.decomposition import PCA
 import imageio
 import matplotlib
@@ -75,8 +75,8 @@ def show_mixup_image(img1: np.array, img2: np.array, img3: np.array,
 
 if __name__ == "__main__":
     # (x, y), _ = mnist.load_data()
-    # (x, y), _ = cifar10.load_data()
-    (x, y), _ = fashion_mnist.load_data()
+    (x, y), _ = cifar10.load_data()
+    # (x, y), _ = fashion_mnist.load_data()
     x_flatten = np.reshape(x, (len(x), -1))
     random_idx1 = list(np.random.randint(0, len(x) - 1, 16))
     random_idx2 = list(np.random.randint(0, len(x) - 1, 16))
@@ -88,11 +88,14 @@ if __name__ == "__main__":
     # x2, y2 pairs
     x2 = x[random_idx2]
     y2 = y[random_idx2]
+    _x, y_a, y_b, lam = mixup_data(x, y, alpha=hyper_params['alpha'])
+    _x = np.reshape(_x, (len(_x), -1))
 
+    x_flatten = np.concatenate([x_flatten, _x], axis=0)
     pca = PCA(n_components=2)
     pca.fit(x_flatten)
-    principal_components = pca.transform(x_flatten)
 
+    principal_components = pca.transform(x_flatten)
     total = principal_components[random_idx1 + random_idx2]
     lam = np.array(range(1, 10)) * 0.1
 
@@ -102,7 +105,7 @@ if __name__ == "__main__":
         y1 = y[idx1]
         y2 = y[idx2]
         figures = []
-        path = './results/sample{}_{}.gif'.format(y1, y2)
+        path = './results/sample______{}_{}.gif'.format(y1, y2)
         for i, l in enumerate(lam): # lambda
             mixed_x, y1, y2, l = mixup_data_one_sample(x1, y1, x2, y2, l)
             x1_flatten = np.reshape(x1, (1, -1))

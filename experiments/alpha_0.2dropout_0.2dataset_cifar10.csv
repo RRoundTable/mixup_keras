@@ -1,0 +1,13 @@
+,0,1,base_loss,base_acc,mixup_loss,mixup_acc
+0,alpha,0.2,1.39648428,0.6586,0.857352691,0.76571256
+1,base_acc,0.6586,,,,
+2,base_loss,1.39648428,,,,
+3,batch_size,64,,,,
+4,dataset,cifar10,,,,
+5,dropout,0.2,,,,
+6,epoch,70,,,,
+7,input_shape,"[32, 32, 3]",,,,
+8,learning_rate,0.001,,,,
+9,mixup_acc,0.76571256,,,,
+10,mixup_loss,0.857352691,,,,
+11,num_classes,10,,,,

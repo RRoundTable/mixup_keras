@@ -5,11 +5,11 @@ ryu071511@gmail.com
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import tensorflow as tf
-from tensorflow.python.keras.datasets import mnist, cifar10
+from tensorflow.python.keras.datasets import mnist, cifar10, cifar100
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras import backend as K
 import numpy as np
-from module import get_model, compute_loss, compute_acc
+from module import get_model, get_deeper_model, compute_loss, compute_acc
 from hyper_params import get_hyper_params
 import pandas as pd
 import os
@@ -27,8 +27,8 @@ base_path = "base_alpha{}_{}.h5".format(alpha, dataset)
 
 if __name__ == "__main__":
 
-    mixup_model = get_model(input_shape, num_classes, dropout)
-    base_model = get_model(input_shape, num_classes, dropout)
+    mixup_model = get_deeper_model(input_shape, num_classes, dropout)
+    base_model = get_deeper_model(input_shape, num_classes, dropout)
     mixup_model.load_weights(mixup_path)
     base_model.load_weights(base_path)
 
@@ -42,6 +42,8 @@ if __name__ == "__main__":
         _, (x_test, y_test) = mnist.load_data()
     elif dataset == 'cifar10':
         _, (x_test, y_test) = cifar10.load_data()
+    elif dataset == 'cifar100':
+        _, (x_test, y_test) = cifar100.load_data()
 
     shape = [-1] + input_shape
     x_test = np.reshape(x_test, shape)

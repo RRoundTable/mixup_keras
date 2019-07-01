@@ -2,7 +2,8 @@ import tensorflow as tf
 
 from tensorflow.python.keras.datasets import mnist
 from tensorflow.python.keras.callbacks import ModelCheckpoint
-from tensorflow.python.keras.layers import Conv2D, Dense, MaxPooling2D, Flatten, Dropout
+from tensorflow.python.keras.layers import Conv2D, Dense, MaxPooling2D, Flatten, Dropout, BatchNormalization
+from tensorflow.python.keras import regularizers
 from tensorflow.python.keras.metrics import accuracy
 from tensorflow.python.keras.losses import categorical_crossentropy
 from tensorflow.python.keras.models import Sequential, Model
@@ -76,6 +77,44 @@ def get_model(input_shape, num_classes, dropout):
     model.add(Dense(128, activation='relu'))
     model.add(Dropout(dropout))
     model.add(Dense(num_classes, activation='softmax', name="main"))
+    return model
+
+def get_deeper_model(input_shape, num_classes, dropout, weight_decay=1e-4):
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='relu',
+                     input_shape=input_shape))
+    model.add(BatchNormalization())
+    model.add(Conv2D(32, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='elu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(dropout))
+    model.add(Conv2D(64, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='elu'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(64, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='elu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(dropout))
+
+    model.add(Conv2D(128, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='elu'))
+    model.add(BatchNormalization())
+    model.add(Conv2D(128, (3, 3), padding='same',
+                     kernel_regularizer=regularizers.l2(weight_decay),
+                     activation='elu'))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.4))
+    model.add(Flatten())
+    model.add(Dense(num_classes, activation='softmax'))
     return model
 
 # loss function

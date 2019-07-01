@@ -4,12 +4,12 @@ def get_hyper_params():
     hyper_params = {
         "alpha": 0.2,
         "learning_rate": 1e-3,
-        "batch_size": 32,
-        'epoch': 50,
+        "batch_size": 64,
+        'epoch': 70,
         'dropout': 0.2,
         # etc
-        'input_shape': [28, 28, 1],
+        'input_shape': [32, 32, 3],
         'num_classes': 10,
-        'dataset': 'mnist'}
+        'dataset': 'cifar10'}
     return hyper_params
 
